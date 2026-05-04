@@ -1,0 +1,114 @@
+[
+  {
+    "id": "375e603e-f0ea-4cb8-89f7-1341d33409d0",
+    "source": "hackernews",
+    "title": "Using “underdrawings” for accurate text and numbers",
+    "summary": "Using “underdrawings” for accurate text and numbers",
+    "url": "https://samcollins.blog/underdrawings/",
+    "publishedAt": "2026-05-01T18:07:28.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.000Z"
+  },
+  {
+    "id": "3544faee-2791-4881-b3a1-2665383f48ef",
+    "source": "hackernews",
+    "title": "BYOMesh – New LoRa mesh radio offers 100x the bandwidth",
+    "summary": "BYOMesh – New LoRa mesh radio offers 100x the bandwidth",
+    "url": "https://partyon.xyz/@nullagent/116499715071759135",
+    "publishedAt": "2026-05-03T18:03:14.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  },
+  {
+    "id": "79c42d68-3c5e-4ddd-9470-dc33360f4d64",
+    "source": "hackernews",
+    "title": "DeepClaude – Claude Code agent loop with DeepSeek V4 Pro",
+    "summary": "DeepClaude – Claude Code agent loop with DeepSeek V4 Pro",
+    "url": "https://github.com/aattaran/deepclaude",
+    "publishedAt": "2026-05-03T22:13:20.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  },
+  {
+    "id": "566c0d48-fa8b-4e71-929e-deba20515bab",
+    "source": "hackernews",
+    "title": "Texico: Learn the principles of programming without even touching a computer",
+    "summary": "Texico: Learn the principles of programming without even touching a computer",
+    "url": "https://www3.nhk.or.jp/nhkworld/en/shows/texico/",
+    "publishedAt": "2026-05-02T04:34:40.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  },
+  {
+    "id": "cc543d48-ed4d-4729-a12e-bc83a2e65b5e",
+    "source": "hackernews",
+    "title": "Debunking the CIA's “magic” heartbeat sensor [video]",
+    "summary": "Debunking the CIA's “magic” heartbeat sensor [video]",
+    "url": "https://www.youtube.com/watch?v=SVTPv4sI_Jc",
+    "publishedAt": "2026-05-03T23:45:50.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  },
+  {
+    "id": "066dc660-d2e5-4d29-8c8b-b4bb36134229",
+    "source": "hackernews",
+    "title": "From CVS to Git, thirty years of source control",
+    "summary": "From CVS to Git, thirty years of source control",
+    "url": "https://evilgeniuslabs.ca/blog/from-cvs-to-git-thirty-years-of-source-control",
+    "publishedAt": "2026-05-02T11:51:31.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  },
+  {
+    "id": "9155ab33-258e-41f7-a529-45041e923674",
+    "source": "hackernews",
+    "title": "Discovering hard disk physical geometry through microbenchmarking (2019)",
+    "summary": "Discovering hard disk physical geometry through microbenchmarking (2019)",
+    "url": "https://blog.stuffedcow.net/2019/09/hard-disk-geometry-microbenchmarking/",
+    "publishedAt": "2026-04-30T21:02:06.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  },
+  {
+    "id": "91ee9904-e73a-4eaa-b791-4cf868d86bd9",
+    "source": "hackernews",
+    "title": "A treasure trove of fossils rewrites the story of early life",
+    "summary": "A treasure trove of fossils rewrites the story of early life",
+    "url": "https://www.quantamagazine.org/a-treasure-trove-of-cambrian-fossils-rewrites-the-story-of-early-life-20260501/",
+    "publishedAt": "2026-05-01T15:42:32.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T09:51:53.001Z"
+  }
+]

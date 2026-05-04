@@ -1,0 +1,30 @@
+{
+  "name": "blackbox-agent-economy",
+  "version": "0.1.0",
+  "description": "Autonomous multi-agent intelligence economy on Solana",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "scraper": "node --experimental-fetch node_modules/.bin/ts-node agents/scraper/index.ts",
+    "analysis": "node --experimental-fetch node_modules/.bin/ts-node agents/analysis/index.ts",
+    "trading": "node --experimental-fetch node_modules/.bin/ts-node agents/trading/index.ts",
+    "setup:wallet": "node --experimental-fetch node_modules/.bin/ts-node scripts/setup-wallet.ts",
+    "setup:devnet": "node --experimental-fetch node_modules/.bin/ts-node scripts/fund-devnet.ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.95.0",
+    "axios": "^1.7.0",
+    "dotenv": "^16.4.0",
+    "bs58": "^5.0.0",
+    "node-cron": "^3.0.3",
+    "winston": "^3.13.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/node-cron": "^3.0.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  },
+  "license": "MIT"
+}
