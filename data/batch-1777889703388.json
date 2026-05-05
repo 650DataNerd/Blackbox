@@ -1,0 +1,114 @@
+[
+  {
+    "id": "8aea9633-4d5c-420a-bbad-d963da5def06",
+    "source": "hackernews",
+    "title": "Trademark Violation: Fake Notepad++ for Mac",
+    "summary": "Trademark Violation: Fake Notepad++ for Mac",
+    "url": "https://notepad-plus-plus.org/news/npp-trademark-infringement/",
+    "publishedAt": "2026-05-04T09:40:06.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "e9f7d938-acbb-4d18-a816-faafec0c1a4c",
+    "source": "hackernews",
+    "title": "Using “underdrawings” for accurate text and numbers",
+    "summary": "Using “underdrawings” for accurate text and numbers",
+    "url": "https://samcollins.blog/underdrawings/",
+    "publishedAt": "2026-05-01T18:07:28.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "990fb7d3-e08d-4894-a103-07f9f5149145",
+    "source": "hackernews",
+    "title": "Debunking the CIA's “magic” heartbeat sensor [video]",
+    "summary": "Debunking the CIA's “magic” heartbeat sensor [video]",
+    "url": "https://www.youtube.com/watch?v=SVTPv4sI_Jc",
+    "publishedAt": "2026-05-03T23:45:50.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "55475e4b-2f5f-492b-8b44-63f17316e29a",
+    "source": "hackernews",
+    "title": "GameStop makes $55.5B takeover offer for eBay",
+    "summary": "GameStop makes $55.5B takeover offer for eBay",
+    "url": "https://www.bbc.co.uk/news/articles/cn0p8yled1do",
+    "publishedAt": "2026-05-04T09:31:12.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "48a80c6c-812a-4abd-8f8a-bad16b4627b0",
+    "source": "hackernews",
+    "title": "BYOMesh – New LoRa mesh radio offers 100x the bandwidth",
+    "summary": "BYOMesh – New LoRa mesh radio offers 100x the bandwidth",
+    "url": "https://partyon.xyz/@nullagent/116499715071759135",
+    "publishedAt": "2026-05-03T18:03:14.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "03b8d584-010f-48ec-8046-b86323b1481f",
+    "source": "hackernews",
+    "title": "DeepClaude – Claude Code agent loop with DeepSeek V4 Pro",
+    "summary": "DeepClaude – Claude Code agent loop with DeepSeek V4 Pro",
+    "url": "https://github.com/aattaran/deepclaude",
+    "publishedAt": "2026-05-03T22:13:20.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "dc618180-4856-46e0-99ff-f6d44cd496f0",
+    "source": "hackernews",
+    "title": "Texico: Learn the principles of programming without even touching a computer",
+    "summary": "Texico: Learn the principles of programming without even touching a computer",
+    "url": "https://www3.nhk.or.jp/nhkworld/en/shows/texico/",
+    "publishedAt": "2026-05-02T04:34:40.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  },
+  {
+    "id": "e6132146-6499-4875-9e9b-5db0c0926359",
+    "source": "hackernews",
+    "title": "From CVS to Git, thirty years of source control",
+    "summary": "From CVS to Git, thirty years of source control",
+    "url": "https://evilgeniuslabs.ca/blog/from-cvs-to-git-thirty-years-of-source-control",
+    "publishedAt": "2026-05-02T11:51:31.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-04T10:15:03.384Z"
+  }
+]

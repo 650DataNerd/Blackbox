@@ -16,6 +16,16 @@ const PROCESSED_FILE = path.join(DATA_DIR, ".processed.json");
 
 if (!fs.existsSync(REPORTS_DIR)) fs.mkdirSync(REPORTS_DIR, { recursive: true });
 
+const BULLISH_WORDS = ["surge", "rally", "gain", "high", "bull", "pump", "rise", "up", "growth", "adoption", "approve", "launch", "partnership"];
+const BEARISH_WORDS = ["crash", "drop", "fall", "bear", "dump", "low", "sell", "ban", "hack", "breach", "lawsuit", "fear", "risk", "warn"];
+
+function scoreSentiment(text: string): "positive" | "negative" | "neutral" {
+  const lower = text.toLowerCase();
+  const bull = BULLISH_WORDS.filter(w => lower.includes(w)).length;
+  const bear = BEARISH_WORDS.filter(w => lower.includes(w)).length;
+  return bull > bear ? "positive" : bear > bull ? "negative" : "neutral";
+}
+
 function loadProcessed(): Set<string> {
   if (!fs.existsSync(PROCESSED_FILE)) return new Set();
   return new Set(JSON.parse(fs.readFileSync(PROCESSED_FILE, "utf-8")));
@@ -28,26 +38,38 @@ function markProcessed(batchFile: string) {
 }
 
 function analyseItems(items: IntelItem[]): IntelReport {
-  const positiveCount = items.filter(i => i.sentiment === "positive").length;
-  const negativeCount = items.filter(i => i.sentiment === "negative").length;
+  const scored = items.map(i => ({
+    ...i,
+    sentiment: scoreSentiment(i.title + " " + i.summary),
+  }));
+
+  const positive = scored.filter(i => i.sentiment === "positive").length;
+  const negative = scored.filter(i => i.sentiment === "negative").length;
   const total = items.length || 1;
-  const sentimentScore = (positiveCount - negativeCount) / total;
-  const confidence = Math.min(0.4 + Math.abs(sentimentScore) * 0.5, 0.95);
+  const sentimentScore = (positive - negative) / total;
+  const confidence = Math.min(0.45 + Math.abs(sentimentScore) * 0.55, 0.95);
 
   const recommendedAction =
-    sentimentScore > 0.2 ? "buy"
-    : sentimentScore < -0.2 ? "sell"
+    sentimentScore > 0.25 ? "buy"
+    : sentimentScore < -0.25 ? "sell"
     : sentimentScore > 0 ? "watch"
     : "hold";
 
   const riskLevel =
-    negativeCount / total > 0.5 ? "high"
-    : negativeCount / total > 0.25 ? "medium"
+    negative / total > 0.5 ? "high"
+    : negative / total > 0.25 ? "medium"
     : "low";
 
-  const topSignals = items
+  const topSignals = scored
+    .sort((a, b) => (a.sentiment === "negative" ? -1 : 1))
     .slice(0, 3)
     .map(i => i.title.slice(0, 80));
+
+  const summary =
+    `Analysed ${items.length} intel items across ${[...new Set(items.map(i => i.source))].join(", ")}. ` +
+    `Sentiment: ${positive} bullish, ${negative} bearish signals. ` +
+    `Market leans ${recommendedAction.toUpperCase()} with ${riskLevel} risk and ${Math.round(confidence * 100)}% confidence. ` +
+    `Top signal: "${topSignals[0] ?? "none"}"`;
 
   return {
     id: `report-${Date.now()}`,
@@ -57,7 +79,7 @@ function analyseItems(items: IntelItem[]): IntelReport {
     riskLevel,
     recommendedAction,
     confidence: parseFloat(confidence.toFixed(2)),
-    summary: `Analysed ${items.length} intel items. Sentiment: ${positiveCount} positive, ${negativeCount} negative. Signal leans ${recommendedAction.toUpperCase()} with ${riskLevel} risk.`,
+    summary,
   };
 }
 
@@ -100,7 +122,7 @@ async function runAnalysisCycle(
         );
         logger.info(`Paid Scraper Agent ${priceLamports} lamports`, { agent: AGENT_ID });
       } catch (err: any) {
-        logger.warn("Payment to Scraper failed", { agent: AGENT_ID, error: err.message });
+        logger.warn("Payment failed", { agent: AGENT_ID, error: err.message });
       }
     }
 
@@ -113,6 +135,7 @@ async function runAnalysisCycle(
       action: report.recommendedAction,
       risk: report.riskLevel,
       confidence: report.confidence,
+      summary: report.summary,
     });
 
     try {
@@ -142,6 +165,7 @@ async function main() {
   logger.info(`Wallet: ${agentKeypair.publicKey.toBase58()}`, { agent: AGENT_ID });
 
   await airdropIfNeeded(connection, agentKeypair);
+
   await runAnalysisCycle(connection, agentKeypair);
 
   cron.schedule("5,20,35,50 * * * *", async () => {

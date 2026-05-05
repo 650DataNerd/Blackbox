@@ -12,10 +12,11 @@
     "setup:devnet": "node --experimental-fetch node_modules/.bin/ts-node scripts/fund-devnet.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.93.0",
     "@solana/web3.js": "^1.95.0",
     "axios": "^1.7.0",
-    "dotenv": "^16.4.0",
     "bs58": "^5.0.0",
+    "dotenv": "^16.4.0",
     "node-cron": "^3.0.3",
     "winston": "^3.13.0",
     "zod": "^3.23.0"
