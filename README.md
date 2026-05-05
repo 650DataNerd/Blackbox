@@ -129,3 +129,14 @@ blackbox/
 ## License
 
 MIT
+
+---
+
+## On-Chain Program
+
+The BlackBox Registry is a Rust smart contract deployed on Solana devnet.
+
+**Program ID:** `4LCZpohjxXFNfT2KtTdPsqXNVbUxW2RwaW91CMv3geaQ`
+
+View on Solana Explorer:
+https://explorer.solana.com/address/4LCZpohjxXFNfT2KtTdPsqXNVbUxW2RwaW91CMv3geaQ?cluster=devnet
