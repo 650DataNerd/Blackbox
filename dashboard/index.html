@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#050708;--surface:#0a0d10;--raised:#0f1318;
+  --line:#ffffff0f;--line2:#ffffff18;--dim:#ffffff28;--mid:#ffffff55;
+  --text:#e8edf2;--white:#ffffff;
+  --gold:#e8a020;--gold-dim:#e8a02022;
+  --green:#18d98b;--green-dim:#18d98b18;
+  --red:#f04060;--red-dim:#f0406018;
+  --blue:#4098f8;--blue-dim:#4098f818;
+  --sans:'Space Grotesk',sans-serif;--mono:'Space Mono',monospace;
+}
+body{background:var(--black);color:var(--text);font-family:var(--sans);font-size:14px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.strip{height:3px;background:linear-gradient(90deg,var(--gold) 0%,var(--green) 50%,var(--blue) 100%);flex-shrink:0}
+.nav{display:flex;align-items:center;padding:0 28px;height:56px;border-bottom:1px solid var(--line);flex-shrink:0;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto}
+.logo-sq{width:30px;height:30px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--black);letter-spacing:-.02em}
+.logo-wordmark{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--white);letter-spacing:.12em}
+.logo-tag{font-size:10px;color:var(--mid);letter-spacing:.08em;padding-left:10px;border-left:1px solid var(--line2)}
+.nav-stat{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.nav-stat-val{font-family:var(--mono);font-size:20px;font-weight:700;line-height:1}
+.nav-stat-val.gold{color:var(--gold)}
+.nav-stat-val.grn{color:var(--green)}
+.nav-stat-label{font-size:9px;color:var(--mid);letter-spacing:.14em;text-transform:uppercase}
+.nav-sep{width:1px;height:28px;background:var(--line2)}
+.nav-clock{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding-left:20px;border-left:1px solid var(--line2)}
+.clock-main{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--white);line-height:1}
+.live-badge{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);letter-spacing:.14em;text-transform:uppercase}
+.pulse{width:5px;height:5px;border-radius:50%;background:var(--green);animation:beat 1.8s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.6);opacity:.4}}
+.grid{display:grid;grid-template-columns:260px 1fr;flex:1;overflow:hidden}
+.left-col{border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden}
+.agents-wrap{padding:20px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line)}
+.col-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:4px}
+.agent-card{background:var(--raised);border:1px solid var(--line2);padding:14px 16px;position:relative;overflow:hidden}
+.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.agent-card.scraper::before{background:var(--blue)}
+.agent-card.analysis::before{background:var(--gold)}
+.agent-card.trading::before{background:var(--green)}
+.agent-top-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.agent-name{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--white);letter-spacing:.06em}
+.agent-tag{font-size:9px;padding:2px 8px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono)}
+.tag-blue{color:var(--blue);background:var(--blue-dim);border:1px solid #4098f830}
+.tag-gold{color:var(--gold);background:var(--gold-dim);border:1px solid #e8a02030}
+.tag-green{color:var(--green);background:var(--green-dim);border:1px solid #18d98b30}
+.agent-kv{display:flex;flex-direction:column;gap:5px}
+.kv{display:flex;justify-content:space-between;align-items:center}
+.kv-k{font-size:10px;color:var(--mid);letter-spacing:.06em;text-transform:uppercase}
+.kv-v{font-size:11px;color:var(--text);font-family:var(--mono)}
+.econ-wrap{padding:20px;flex:1}
+.econ-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.econ-cell{background:var(--raised);border:1px solid var(--line2);padding:12px}
+.econ-val{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px}
+.econ-lbl{font-size:9px;color:var(--mid);letter-spacing:.12em;text-transform:uppercase}
+.prog-block{margin:0 20px 20px;background:var(--raised);border:1px solid var(--line2);padding:12px 14px}
+.prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.prog-lbl{font-size:9px;color:var(--mid);letter-spacing:.12em;text-transform:uppercase}
+.prog-link{font-size:9px;color:var(--blue);text-decoration:none;letter-spacing:.06em}
+.prog-link:hover{text-decoration:underline}
+.prog-id{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.04em;word-break:break-all;line-height:1.5}
+.right-col{display:grid;grid-template-rows:1fr 1fr;overflow:hidden}
+.panel{display:flex;flex-direction:column;overflow:hidden;border-bottom:1px solid var(--line)}
+.panel:last-child{border-bottom:none}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);flex-shrink:0}
+.panel-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--white);display:flex;align-items:center;gap:10px}
+.panel-title-dot{width:6px;height:6px;border-radius:50%}
+.dot-gold{background:var(--gold)}
+.dot-green{background:var(--green)}
+.panel-meta{font-size:10px;color:var(--mid);letter-spacing:.08em}
+.panel-body{overflow-y:auto;flex:1}
+.feed-row{display:grid;grid-template-columns:80px 90px 80px 1fr 80px 70px;border-bottom:1px solid var(--line);align-items:center;transition:background .1s;min-height:46px}
+.feed-row:hover{background:var(--raised)}
+.feed-row.hdr{background:var(--surface);position:sticky;top:0;z-index:1;min-height:34px}
+.feed-cell{padding:10px 16px;font-size:12px;color:var(--text);line-height:1.4}
+.feed-cell.hd{font-size:9px;color:var(--mid);letter-spacing:.14em;text-transform:uppercase;padding:8px 16px}
+.feed-cell.mono{font-family:var(--mono)}
+.feed-cell.dim{color:var(--mid)}
+.feed-cell.sum{font-size:11px;line-height:1.55}
+.intel-grid{display:grid;grid-template-columns:1fr 90px 110px}
+.chip{display:inline-flex;align-items:center;padding:3px 10px;font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.chip-buy{color:var(--green);background:var(--green-dim)}
+.chip-sell{color:var(--red);background:var(--red-dim)}
+.chip-hold{color:var(--gold);background:var(--gold-dim)}
+.chip-watch{color:var(--blue);background:var(--blue-dim)}
+.chip-low{color:var(--green);background:var(--green-dim)}
+.chip-med{color:var(--gold);background:var(--gold-dim)}
+.chip-high{color:var(--red);background:var(--red-dim)}
+.cbar{display:flex;align-items:center;gap:7px}
+.cbar-track{flex:1;height:2px;background:var(--line2)}
+.cbar-fill{height:2px;background:var(--gold)}
+.cbar-pct{font-family:var(--mono);font-size:10px;color:var(--mid);white-space:nowrap}
+.sent{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sent-pos{background:var(--green)}
+.sent-neg{background:var(--red)}
+.sent-neu{background:var(--dim)}
+.tx-link{color:var(--blue);text-decoration:none;font-size:10px;font-family:var(--mono)}
+.tx-link:hover{text-decoration:underline}
+.empty-msg{padding:40px;text-align:center;font-size:12px;color:var(--mid);letter-spacing:.08em}
+.foot{height:30px;flex-shrink:0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:9px;color:var(--mid);letter-spacing:.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="strip"></div>
+
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="logo-sq">BB</div>
+    <div><div class="logo-wordmark">BLACKBOX</div></div>
+    <div class="logo-tag">AUTONOMOUS INTEL SYNDICATE</div>
+  </div>
+  <div class="nav-stat"><div class="nav-stat-val gold" id="n-batches">—</div><div class="nav-stat-label">Batches</div></div>
+  <div class="nav-sep"></div>
+  <div class="nav-stat"><div class="nav-stat-val gold" id="n-reports">—</div><div class="nav-stat-label">Reports</div></div>
+  <div class="nav-sep"></div>
+  <div class="nav-stat"><div class="nav-stat-val grn" id="n-trades">—</div><div class="nav-stat-label">Trades</div></div>
+  <div class="nav-sep"></div>
+  <div class="nav-clock">
+    <div class="clock-main" id="clock">--:--:--</div>
+    <div class="live-badge"><div class="pulse"></div>Live · Solana Devnet</div>
+  </div>
+</nav>
+
+<div class="grid">
+  <div class="left-col">
+    <div class="agents-wrap">
+      <div class="col-label">Active agents</div>
+      <div class="agent-card scraper">
+        <div class="agent-top-row"><div class="agent-name">SCRAPER</div><div class="agent-tag tag-blue">Data</div></div>
+        <div class="agent-kv">
+          <div class="kv"><span class="kv-k">Cycle</span><span class="kv-v">15 min</span></div>
+          <div class="kv"><span class="kv-k">Sources</span><span class="kv-v">HN · CC</span></div>
+          <div class="kv"><span class="kv-k">Status</span><span class="kv-v" style="color:var(--green)">● Active</span></div>
+        </div>
+      </div>
+      <div class="agent-card analysis">
+        <div class="agent-top-row"><div class="agent-name">ANALYSIS</div><div class="agent-tag tag-gold">Intel</div></div>
+        <div class="agent-kv">
+          <div class="kv"><span class="kv-k">Pays</span><span class="kv-v">0.001 SOL</span></div>
+          <div class="kv"><span class="kv-k">Engine</span><span class="kv-v">Sentiment</span></div>
+          <div class="kv"><span class="kv-k">Status</span><span class="kv-v" style="color:var(--green)">● Active</span></div>
+        </div>
+      </div>
+      <div class="agent-card trading">
+        <div class="agent-top-row"><div class="agent-name">TRADING</div><div class="agent-tag tag-green">Exec</div></div>
+        <div class="agent-kv">
+          <div class="kv"><span class="kv-k">Pays</span><span class="kv-v">0.002 SOL</span></div>
+          <div class="kv"><span class="kv-k">Mode</span><span class="kv-v">Paper</span></div>
+          <div class="kv"><span class="kv-k">Status</span><span class="kv-v" style="color:var(--green)">● Active</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="econ-wrap">
+      <div class="col-label">Economy</div>
+      <div class="econ-grid">
+        <div class="econ-cell"><div class="econ-val" id="e-batches">—</div><div class="econ-lbl">Batches</div></div>
+        <div class="econ-cell"><div class="econ-val" id="e-reports">—</div><div class="econ-lbl">Reports</div></div>
+        <div class="econ-cell"><div class="econ-val" id="e-trades">—</div><div class="econ-lbl">Trades</div></div>
+        <div class="econ-cell"><div class="econ-val" style="font-size:13px;color:var(--green)">Devnet</div><div class="econ-lbl">Network</div></div>
+      </div>
+    </div>
+
+    <div class="prog-block">
+      <div class="prog-row">
+        <span class="prog-lbl">Registry program</span>
+        <a class="prog-link" href="https://explorer.solana.com/address/4LCZpohjxXFNfT2KtTdPsqXNVbUxW2RwaW91CMv3geaQ?cluster=devnet" target="_blank">Explorer ↗</a>
+      </div>
+      <div class="prog-id">4LCZpohjxXFNfT2KtTdPsqXNVbUxW2RwaW91CMv3geaQ</div>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title"><div class="panel-title-dot dot-gold"></div>Intelligence Reports</div>
+        <div class="panel-meta" id="rep-meta">—</div>
+      </div>
+      <div class="panel-body">
+        <div class="feed-row hdr">
+          <div class="feed-cell hd">Time</div>
+          <div class="feed-cell hd">Action</div>
+          <div class="feed-cell hd">Risk</div>
+          <div class="feed-cell hd">Summary</div>
+          <div class="feed-cell hd">Confidence</div>
+          <div class="feed-cell hd">Tx</div>
+        </div>
+        <div id="rep-body"><div class="empty-msg">Awaiting reports — run the analysis agent</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title"><div class="panel-title-dot dot-green"></div>Live Intel Feed</div>
+        <div class="panel-meta" id="intel-meta">—</div>
+      </div>
+      <div class="panel-body">
+        <div class="feed-row hdr intel-grid">
+          <div class="feed-cell hd">Headline</div>
+          <div class="feed-cell hd">Source</div>
+          <div class="feed-cell hd">Sentiment</div>
+        </div>
+        <div id="intel-body"><div class="empty-msg">Awaiting intel — run the scraper agent</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <span>Blackbox Autonomous Intelligence Syndicate · Solana Devnet · Rust Program Deployed</span>
+  <span id="last-upd">—</span>
+</div>
+
+<script>
+function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{hour12:false})}
+setInterval(clock,1000);clock();
+
+function ago(s){
+  if(!s)return'—';
+  const d=(Date.now()-new Date(s))/1000;
+  if(d<60)return Math.round(d)+'s ago';
+  if(d<3600)return Math.round(d/60)+'m ago';
+  return Math.round(d/3600)+'h ago';
+}
+
+async function loadStats(){
+  try{
+    const r=await fetch('/api/stats');const d=await r.json();
+    ['batches','reports','trades'].forEach(k=>{
+      document.getElementById('n-'+k).textContent=d[k];
+      document.getElementById('e-'+k).textContent=d[k];
+    });
+  }catch(e){}
+}
+
+async function loadReports(){
+  try{
+    const r=await fetch('/api/reports');const data=await r.json();
+    document.getElementById('rep-meta').textContent=data.length+' reports';
+    const el=document.getElementById('rep-body');
+    if(!data.length){el.innerHTML='<div class="empty-msg">No reports — run the analysis agent</div>';return;}
+    el.innerHTML=data.map(r=>`
+      <div class="feed-row">
+        <div class="feed-cell dim mono" style="font-size:11px">${ago(r.generatedAt)}</div>
+        <div class="feed-cell"><span class="chip chip-${r.recommendedAction}">${r.recommendedAction}</span></div>
+        <div class="feed-cell"><span class="chip chip-${r.riskLevel==='medium'?'med':r.riskLevel}">${r.riskLevel}</span></div>
+        <div class="feed-cell sum">${r.summary||'—'}</div>
+        <div class="feed-cell">
+          <div class="cbar">
+            <div class="cbar-track"><div class="cbar-fill" style="width:${Math.round(r.confidence*100)}%"></div></div>
+            <div class="cbar-pct">${Math.round(r.confidence*100)}%</div>
+          </div>
+        </div>
+        <div class="feed-cell">${r.paidTxSignature?`<a class="tx-link" href="https://explorer.solana.com/tx/${r.paidTxSignature}?cluster=devnet" target="_blank">view ↗</a>`:'<span style="color:var(--mid)">—</span>'}</div>
+      </div>
+    `).join('');
+  }catch(e){}
+}
+
+async function loadIntel(){
+  try{
+    const r=await fetch('/api/intel');const items=await r.json();
+    document.getElementById('intel-meta').textContent=items.length+' items';
+    const el=document.getElementById('intel-body');
+    if(!items.length){el.innerHTML='<div class="empty-msg">No intel — run the scraper agent</div>';return;}
+    el.innerHTML=items.map(i=>`
+      <div class="feed-row intel-grid">
+        <div class="feed-cell">${i.title}</div>
+        <div class="feed-cell dim mono" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${i.source}</div>
+        <div class="feed-cell">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="sent sent-${i.sentiment==='positive'?'pos':i.sentiment==='negative'?'neg':'neu'}"></div>
+            <span style="font-size:11px;color:var(--mid)">${ago(i.fetchedAt)}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }catch(e){}
+}
+
+async function refresh(){
+  await Promise.all([loadStats(),loadReports(),loadIntel()]);
+  document.getElementById('last-upd').textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour12:false});
+}
+refresh();setInterval(refresh,15000);
+</script>
+</body>
+</html>
