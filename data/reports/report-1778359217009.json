@@ -1,0 +1,15 @@
+{
+  "id": "report-1778359217009",
+  "generatedAt": "2026-05-09T20:40:17.009Z",
+  "sourcesUsed": 8,
+  "topSignals": [
+    "GameStop makes $55.5B takeover offer for eBay",
+    "Trademark violation: Fake Notepad++ for Mac",
+    "Using “underdrawings” for accurate text and numbers"
+  ],
+  "riskLevel": "low",
+  "recommendedAction": "hold",
+  "confidence": 0.52,
+  "summary": "Analysed 8 items across hackernews. Sentiment: 0 bullish, 1 bearish. Signal leans HOLD with low risk and 52% confidence.",
+  "paidTxSignature": "uSjB9TiYCiAte69CUK5AgUgGwwhh16R6nveUGWD6Nq6JFcyAjn3pHY5yX6ToQ96US8ZSPrgrNryRv23X89LBA6i"
+}

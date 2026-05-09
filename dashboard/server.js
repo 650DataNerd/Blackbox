@@ -1,65 +1,67 @@
+require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
+const { createClient } = require("@supabase/supabase-js");
+const ws = require("ws");
 
 const app = express();
 app.use(cors());
 app.use(express.static(__dirname));
 
-const DATA_DIR = path.join(__dirname, "../data");
-const REPORTS_DIR = path.join(DATA_DIR, "reports");
-const TRADES_DIR = path.join(DATA_DIR, "trades");
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY,
+  { realtime: { transport: ws } }
+);
 
-function readJsonFiles(dir) {
-  if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir)
-    .filter(f => f.endsWith(".json") && !f.startsWith("."))
-    .map(f => {
-      try {
-        return JSON.parse(fs.readFileSync(path.join(dir, f), "utf-8"));
-      } catch { return null; }
-    })
-    .filter(Boolean)
-    .sort((a, b) => new Date(b.fetchedAt || b.generatedAt || b.executedAt || 0) - 
-                    new Date(a.fetchedAt || a.generatedAt || a.executedAt || 0));
-}
-
-app.get("/api/stats", (req, res) => {
-  const batches = fs.existsSync(DATA_DIR) 
-    ? fs.readdirSync(DATA_DIR).filter(f => f.startsWith("batch-")).length 
-    : 0;
-  const reports = fs.existsSync(REPORTS_DIR)
-    ? fs.readdirSync(REPORTS_DIR).filter(f => f.endsWith(".json")).length
-    : 0;
-  const trades = fs.existsSync(TRADES_DIR)
-    ? fs.readdirSync(TRADES_DIR).filter(f => f.endsWith(".json")).length
-    : 0;
-
-  res.json({ batches, reports, trades, uptime: process.uptime() });
+app.get("/api/stats", async (req, res) => {
+  try {
+    const [intel, reports, trades] = await Promise.all([
+      supabase.from("intel_batches").select("id", { count: "exact", head: true }),
+      supabase.from("reports").select("id", { count: "exact", head: true }),
+      supabase.from("trades").select("id", { count: "exact", head: true }),
+    ]);
+    res.json({
+      batches: intel.count ?? 0,
+      reports: reports.count ?? 0,
+      trades: trades.count ?? 0,
+    });
+  } catch (e) {
+    res.json({ batches: 0, reports: 0, trades: 0 });
+  }
 });
 
-app.get("/api/reports", (req, res) => {
-  const reports = readJsonFiles(REPORTS_DIR).slice(0, 10);
-  res.json(reports);
+app.get("/api/reports", async (req, res) => {
+  try {
+    const { data } = await supabase
+      .from("reports")
+      .select("*")
+      .order("generated_at", { ascending: false })
+      .limit(20);
+    res.json(data || []);
+  } catch (e) { res.json([]); }
 });
 
-app.get("/api/trades", (req, res) => {
-  const trades = readJsonFiles(TRADES_DIR).slice(0, 10);
-  res.json(trades);
+app.get("/api/trades", async (req, res) => {
+  try {
+    const { data } = await supabase
+      .from("trades")
+      .select("*")
+      .order("executed_at", { ascending: false })
+      .limit(20);
+    res.json(data || []);
+  } catch (e) { res.json([]); }
 });
 
-app.get("/api/intel", (req, res) => {
-  if (!fs.existsSync(DATA_DIR)) return res.json([]);
-  const batches = fs.readdirSync(DATA_DIR)
-    .filter(f => f.startsWith("batch-") && f.endsWith(".json"))
-    .sort().reverse().slice(0, 3);
-  const items = batches.flatMap(f => {
-    try {
-      return JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), "utf-8"));
-    } catch { return []; }
-  }).slice(0, 15);
-  res.json(items);
+app.get("/api/intel", async (req, res) => {
+  try {
+    const { data } = await supabase
+      .from("intel_batches")
+      .select("*")
+      .order("fetched_at", { ascending: false })
+      .limit(20);
+    res.json(data || []);
+  } catch (e) { res.json([]); }
 });
 
 app.listen(3000, () => console.log("Dashboard running at http://localhost:3000"));

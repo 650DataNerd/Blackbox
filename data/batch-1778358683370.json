@@ -1,0 +1,114 @@
+[
+  {
+    "id": "6376091a-e205-462a-bc65-3cf48b3db5ab",
+    "source": "hackernews",
+    "title": "Bun's experimental Rust rewrite hits 99.8% test compatibility on Linux x64 glibc",
+    "summary": "Bun's experimental Rust rewrite hits 99.8% test compatibility on Linux x64 glibc",
+    "url": "https://twitter.com/jarredsumner/status/2053047748191232310",
+    "publishedAt": "2026-05-09T10:12:55.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "22b0fefb-b1f9-45c2-9bb3-bc6a4633c0c6",
+    "source": "hackernews",
+    "title": "Internet Archive Switzerland",
+    "summary": "Internet Archive Switzerland",
+    "url": "https://blog.archive.org/2026/05/06/internet-archive-switzerland-expanding-a-global-mission-to-preserve-knowledge/",
+    "publishedAt": "2026-05-09T12:00:30.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "8c771cb5-702d-4c35-9014-35caaa9d40e3",
+    "source": "hackernews",
+    "title": "CPanel's Black Week: 3 New Vulnerabilities Patched After Attack on 44k Servers",
+    "summary": "CPanel's Black Week: 3 New Vulnerabilities Patched After Attack on 44k Servers",
+    "url": "https://www.copahost.com/blog/cpanels-black-week-three-new-vulnerabilities-patched-after-ransomware-attack-on-44000-servers/",
+    "publishedAt": "2026-05-09T17:06:46.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "58bb5465-ef4b-4cf4-88c9-b3ac03bc5e13",
+    "source": "hackernews",
+    "title": "I’ve banned query strings",
+    "summary": "I’ve banned query strings",
+    "url": "https://chrismorgan.info/no-query-strings",
+    "publishedAt": "2026-05-09T16:28:36.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "71cef23a-cfdc-4769-8da1-a0f35b6f37c3",
+    "source": "hackernews",
+    "title": "Zed Editor Theme-Builder",
+    "summary": "Zed Editor Theme-Builder",
+    "url": "https://zed.dev/theme-builder",
+    "publishedAt": "2026-05-09T17:30:39.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "f54527c9-ecb8-4bf0-9b4d-166ea02d7293",
+    "source": "hackernews",
+    "title": "Show HN: I wrote a flight simulator in my own programming language",
+    "summary": "Show HN: I wrote a flight simulator in my own programming language",
+    "url": "https://github.com/navid-m/flightsim",
+    "publishedAt": "2026-05-06T21:58:05.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "efba85d9-a69c-4928-91d0-94327ea9b8b2",
+    "source": "hackernews",
+    "title": "Distributing Mac software is increasing my cortisol levels",
+    "summary": "Distributing Mac software is increasing my cortisol levels",
+    "url": "https://blog.kronis.dev/blog/apple-is-increasing-my-cortisol-levels",
+    "publishedAt": "2026-05-09T14:40:58.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  },
+  {
+    "id": "034fd7d4-b596-4d1a-a714-c07b3bf56710",
+    "source": "hackernews",
+    "title": "Production engineering when trading billions of dollars a day [video]",
+    "summary": "Production engineering when trading billions of dollars a day [video]",
+    "url": "https://www.youtube.com/watch?v=zR9PpXWsKFQ",
+    "publishedAt": "2026-05-08T19:45:21.000Z",
+    "tags": [
+      "tech",
+      "news"
+    ],
+    "sentiment": "neutral",
+    "fetchedAt": "2026-05-09T20:31:23.370Z"
+  }
+]

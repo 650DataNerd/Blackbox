@@ -1,0 +1,15 @@
+{
+  "id": "report-1778359209329",
+  "generatedAt": "2026-05-09T20:40:09.329Z",
+  "sourcesUsed": 8,
+  "topSignals": [
+    "Using “underdrawings” for accurate text and numbers",
+    "BYOMesh – New LoRa mesh radio offers 100x the bandwidth",
+    "DeepClaude – Claude Code agent loop with DeepSeek V4 Pro"
+  ],
+  "riskLevel": "low",
+  "recommendedAction": "hold",
+  "confidence": 0.52,
+  "summary": "Analysed 8 items across hackernews. Sentiment: 0 bullish, 1 bearish. Signal leans HOLD with low risk and 52% confidence.",
+  "paidTxSignature": "3woURKKtjYPMMpnGZgbtYBd3tWGYBCEiJZtVfB4jAaeHz8WFckDyRqnDBAzzdPCHqsLtSBPtCYwrZDtqETWdTKTr"
+}

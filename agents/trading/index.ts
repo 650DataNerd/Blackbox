@@ -6,6 +6,7 @@ import path from "path";
 import cron from "node-cron";
 import { getConnection, loadKeypair, airdropIfNeeded, transferSOL } from "../../lib/solana";
 import { writeToRegistry, hashData } from "../../lib/registry";
+import { saveTrade } from "../../lib/db";
 import { logger } from "../../lib/logger";
 import { IntelReport, TradeRecord } from "../../lib/types";
 
@@ -32,10 +33,10 @@ function decideAction(report: IntelReport): { action: "buy" | "sell" | "hold"; a
     return { action: "hold", asset: "SOL", note: `Confidence too low (${report.confidence}) — holding` };
   }
   if (report.recommendedAction === "buy" && report.riskLevel !== "high") {
-    return { action: "buy", asset: "SOL", note: `Buy signal, ${report.riskLevel} risk, confidence ${report.confidence}` };
+    return { action: "buy", asset: "SOL", note: `Buy signal — ${report.riskLevel} risk, ${report.confidence} confidence` };
   }
   if (report.recommendedAction === "sell") {
-    return { action: "sell", asset: "SOL", note: `Sell signal, risk: ${report.riskLevel}` };
+    return { action: "sell", asset: "SOL", note: `Sell signal — risk: ${report.riskLevel}` };
   }
   return { action: "hold", asset: "SOL", note: `No clear signal — holding` };
 }
@@ -52,8 +53,7 @@ async function runTradingCycle(
   }
 
   const processed = loadProcessed();
-  const reportFiles = fs
-    .readdirSync(REPORTS_DIR)
+  const reportFiles = fs.readdirSync(REPORTS_DIR)
     .filter(f => f.endsWith(".json"))
     .filter(f => !processed.has(f.replace(".json", "")));
 
@@ -77,19 +77,15 @@ async function runTradingCycle(
       try {
         const analysisKeypair = loadKeypair(analysisKey);
         paymentTx = await transferSOL(
-          connection,
-          agentKeypair,
-          analysisKeypair.publicKey,
-          priceLamports
+          connection, agentKeypair, analysisKeypair.publicKey, priceLamports
         );
         logger.info(`Paid Analysis Agent ${priceLamports} lamports`, { agent: AGENT_ID });
       } catch (err: any) {
-        logger.warn("Payment to Analysis Agent failed", { agent: AGENT_ID, error: err.message });
+        logger.warn("Payment failed", { agent: AGENT_ID, error: err.message });
       }
     }
 
     const decision = decideAction(report);
-
     const trade: TradeRecord = {
       id: `trade-${Date.now()}`,
       executedAt: new Date().toISOString(),
@@ -101,8 +97,19 @@ async function runTradingCycle(
       note: decision.note,
     };
 
-    const tradePath = path.join(TRADES_DIR, `${trade.id}.json`);
-    fs.writeFileSync(tradePath, JSON.stringify(trade, null, 2));
+    // Save locally
+    fs.writeFileSync(
+      path.join(TRADES_DIR, `${trade.id}.json`),
+      JSON.stringify(trade, null, 2)
+    );
+
+    // Save to Supabase
+    try {
+      await saveTrade(trade);
+      logger.info("Trade saved to Supabase", { agent: AGENT_ID });
+    } catch (err: any) {
+      logger.warn("Supabase save failed", { agent: AGENT_ID, error: err.message });
+    }
 
     logger.info(`Trade executed (simulated)`, {
       agent: AGENT_ID,

@@ -1,0 +1,15 @@
+{
+  "id": "report-1778359213534",
+  "generatedAt": "2026-05-09T20:40:13.534Z",
+  "sourcesUsed": 8,
+  "topSignals": [
+    "Trademark Violation: Fake Notepad++ for Mac",
+    "Using “underdrawings” for accurate text and numbers",
+    "Debunking the CIA's “magic” heartbeat sensor [video]"
+  ],
+  "riskLevel": "low",
+  "recommendedAction": "hold",
+  "confidence": 0.52,
+  "summary": "Analysed 8 items across hackernews. Sentiment: 0 bullish, 1 bearish. Signal leans HOLD with low risk and 52% confidence.",
+  "paidTxSignature": "4t7tKRNZ4NBm1y9EFP2JvLEsvvRtu5q816P9c8JLJEXRbbSnfVbR2qo7YRzfnBGnQ9G7HN4bp4GCkkFosruvnK2g"
+}

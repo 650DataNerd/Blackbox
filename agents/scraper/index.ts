@@ -8,6 +8,7 @@ import fs from "fs";
 import path from "path";
 import { getConnection, loadKeypair, airdropIfNeeded } from "../../lib/solana";
 import { writeToRegistry, hashData } from "../../lib/registry";
+import { saveIntelItems } from "../../lib/db";
 import { logger } from "../../lib/logger";
 import { IntelItem } from "../../lib/types";
 
@@ -45,29 +46,23 @@ async function fetchHackerNews(): Promise<IntelItem[]> {
       { timeout: 8000 }
     );
     const ids: number[] = topRes.data.slice(0, 8);
-
     const items = await Promise.all(
       ids.map((id) =>
-        axios
-          .get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, { timeout: 5000 })
-          .then((r) => r.data)
-          .catch(() => null)
+        axios.get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, { timeout: 5000 })
+          .then((r) => r.data).catch(() => null)
       )
     );
-
-    return items
-      .filter((i) => i && i.title)
-      .map((i) => ({
-        id: crypto.randomUUID(),
-        source: "hackernews",
-        title: i.title,
-        summary: i.title,
-        url: i.url ?? `https://news.ycombinator.com/item?id=${i.id}`,
-        publishedAt: new Date(i.time * 1000).toISOString(),
-        tags: ["tech", "news"],
-        sentiment: "neutral" as const,
-        fetchedAt: new Date().toISOString(),
-      }));
+    return items.filter((i) => i && i.title).map((i) => ({
+      id: crypto.randomUUID(),
+      source: "hackernews",
+      title: i.title,
+      summary: i.title,
+      url: i.url ?? `https://news.ycombinator.com/item?id=${i.id}`,
+      publishedAt: new Date(i.time * 1000).toISOString(),
+      tags: ["tech", "news"],
+      sentiment: "neutral" as const,
+      fetchedAt: new Date().toISOString(),
+    }));
   } catch (err: any) {
     logger.warn("HackerNews fetch failed", { agent: AGENT_ID, error: err.message });
     return [];
@@ -79,6 +74,7 @@ async function fetchCryptoCompare(): Promise<IntelItem[]> {
     const url = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN&sortOrder=popular";
     const res = await axios.get(url, { timeout: 8000 });
     const articles = res.data?.Data ?? [];
+    if (!Array.isArray(articles)) return [];
     return articles.slice(0, 8).map((a: any) => ({
       id: crypto.randomUUID(),
       source: "cryptocompare",
@@ -115,9 +111,18 @@ async function runScrapeCycle(
     return;
   }
 
+  // Save to local file
   const batchId = `batch-${Date.now()}`;
   const outPath = path.join(DATA_DIR, `${batchId}.json`);
   fs.writeFileSync(outPath, JSON.stringify(allItems, null, 2));
+
+  // Save to Supabase
+  try {
+    await saveIntelItems(allItems);
+    logger.info(`Saved ${allItems.length} items to Supabase`, { agent: AGENT_ID });
+  } catch (err: any) {
+    logger.warn("Supabase save failed", { agent: AGENT_ID, error: err.message });
+  }
 
   logger.info(`Saved ${allItems.length} intel items`, {
     agent: AGENT_ID,
@@ -125,6 +130,7 @@ async function runScrapeCycle(
     sources: [...new Set(allItems.map(i => i.source))].join(", "),
   });
 
+  // Write to Solana registry
   const dataHash = hashData(allItems);
   try {
     await writeToRegistry(connection, agentKeypair, {

@@ -1,0 +1,15 @@
+{
+  "id": "report-1778359221240",
+  "generatedAt": "2026-05-09T20:40:21.240Z",
+  "sourcesUsed": 8,
+  "topSignals": [
+    "Bun's experimental Rust rewrite hits 99.8% test compatibility on Linux x64 glibc",
+    "Internet Archive Switzerland",
+    "I’ve banned query strings"
+  ],
+  "riskLevel": "low",
+  "recommendedAction": "hold",
+  "confidence": 0.52,
+  "summary": "Analysed 8 items across hackernews. Sentiment: 0 bullish, 1 bearish. Signal leans HOLD with low risk and 52% confidence.",
+  "paidTxSignature": "nKkW1Y9Mamn9pY31VRLZRuLVY1ih3By2BSYY3UK79aLgWoyJgWqZfKTDNWQyBnQCaQvRFJZKUmxebHjn3Abhm4r"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "trade-1778359422133",
+  "executedAt": "2026-05-09T20:43:42.133Z",
+  "action": "hold",
+  "asset": "SOL",
+  "basedOnReportId": "report-1778359221240",
+  "txSignature": "3KhakzJb38jp9sZ119jgWch4NdUPr9cwv1CvmfUWZ8Juru1NScoC7nDiSuLHvvNT7hEK2XTRY9ScLJwEyAvzgch7",
+  "status": "simulated",
+  "note": "Confidence too low (0.52) — holding"
+}

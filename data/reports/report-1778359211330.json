@@ -1,0 +1,15 @@
+{
+  "id": "report-1778359211330",
+  "generatedAt": "2026-05-09T20:40:11.330Z",
+  "sourcesUsed": 8,
+  "topSignals": [
+    "Trademark Violation: Fake Notepad++ for Mac",
+    "Using “underdrawings” for accurate text and numbers",
+    "BYOMesh – New LoRa mesh radio offers 100x the bandwidth"
+  ],
+  "riskLevel": "low",
+  "recommendedAction": "hold",
+  "confidence": 0.52,
+  "summary": "Analysed 8 items across hackernews. Sentiment: 0 bullish, 1 bearish. Signal leans HOLD with low risk and 52% confidence.",
+  "paidTxSignature": "3HfK2h6rEAFjn3f1QKKwAx4Q1uFj8zTB6J9t2LsuJaPBQFYQiuAVWoK5J6ysiEhx21RvZqXbXRaHE1FqWf2UnfQY"
+}

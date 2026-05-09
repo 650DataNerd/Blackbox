@@ -6,6 +6,7 @@ import path from "path";
 import cron from "node-cron";
 import { getConnection, loadKeypair, airdropIfNeeded, transferSOL } from "../../lib/solana";
 import { writeToRegistry, hashData } from "../../lib/registry";
+import { saveReport } from "../../lib/db";
 import { logger } from "../../lib/logger";
 import { IntelItem, IntelReport } from "../../lib/types";
 
@@ -16,13 +17,13 @@ const PROCESSED_FILE = path.join(DATA_DIR, ".processed.json");
 
 if (!fs.existsSync(REPORTS_DIR)) fs.mkdirSync(REPORTS_DIR, { recursive: true });
 
-const BULLISH_WORDS = ["surge", "rally", "gain", "high", "bull", "pump", "rise", "up", "growth", "adoption", "approve", "launch", "partnership"];
-const BEARISH_WORDS = ["crash", "drop", "fall", "bear", "dump", "low", "sell", "ban", "hack", "breach", "lawsuit", "fear", "risk", "warn"];
+const BULLISH = ["surge","rally","gain","high","bull","pump","rise","up","growth","adoption","approve","launch","partnership","record","soar"];
+const BEARISH = ["crash","drop","fall","bear","dump","low","sell","ban","hack","breach","lawsuit","fear","risk","warn","decline","plunge"];
 
 function scoreSentiment(text: string): "positive" | "negative" | "neutral" {
   const lower = text.toLowerCase();
-  const bull = BULLISH_WORDS.filter(w => lower.includes(w)).length;
-  const bear = BEARISH_WORDS.filter(w => lower.includes(w)).length;
+  const bull = BULLISH.filter(w => lower.includes(w)).length;
+  const bear = BEARISH.filter(w => lower.includes(w)).length;
   return bull > bear ? "positive" : bear > bull ? "negative" : "neutral";
 }
 
@@ -60,16 +61,8 @@ function analyseItems(items: IntelItem[]): IntelReport {
     : negative / total > 0.25 ? "medium"
     : "low";
 
-  const topSignals = scored
-    .sort((a, b) => (a.sentiment === "negative" ? -1 : 1))
-    .slice(0, 3)
-    .map(i => i.title.slice(0, 80));
-
-  const summary =
-    `Analysed ${items.length} intel items across ${[...new Set(items.map(i => i.source))].join(", ")}. ` +
-    `Sentiment: ${positive} bullish, ${negative} bearish signals. ` +
-    `Market leans ${recommendedAction.toUpperCase()} with ${riskLevel} risk and ${Math.round(confidence * 100)}% confidence. ` +
-    `Top signal: "${topSignals[0] ?? "none"}"`;
+  const topSignals = scored.slice(0, 3).map(i => i.title.slice(0, 80));
+  const sources = [...new Set(items.map(i => i.source))].join(", ");
 
   return {
     id: `report-${Date.now()}`,
@@ -79,7 +72,9 @@ function analyseItems(items: IntelItem[]): IntelReport {
     riskLevel,
     recommendedAction,
     confidence: parseFloat(confidence.toFixed(2)),
-    summary,
+    summary: `Analysed ${items.length} items across ${sources}. ` +
+      `Sentiment: ${positive} bullish, ${negative} bearish. ` +
+      `Signal leans ${recommendedAction.toUpperCase()} with ${riskLevel} risk and ${Math.round(confidence * 100)}% confidence.`,
   };
 }
 
@@ -90,8 +85,7 @@ async function runAnalysisCycle(
   logger.info("Starting analysis cycle", { agent: AGENT_ID });
 
   const processed = loadProcessed();
-  const batchFiles = fs
-    .readdirSync(DATA_DIR)
+  const batchFiles = fs.readdirSync(DATA_DIR)
     .filter(f => f.startsWith("batch-") && f.endsWith(".json"))
     .filter(f => !processed.has(f));
 
@@ -115,10 +109,7 @@ async function runAnalysisCycle(
       try {
         const scraperKeypair = loadKeypair(scraperKey);
         paidTxSignature = await transferSOL(
-          connection,
-          agentKeypair,
-          scraperKeypair.publicKey,
-          priceLamports
+          connection, agentKeypair, scraperKeypair.publicKey, priceLamports
         );
         logger.info(`Paid Scraper Agent ${priceLamports} lamports`, { agent: AGENT_ID });
       } catch (err: any) {
@@ -127,15 +118,24 @@ async function runAnalysisCycle(
     }
 
     const report: IntelReport = { ...analyseItems(items), paidTxSignature };
+
+    // Save locally
     const reportPath = path.join(REPORTS_DIR, `${report.id}.json`);
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+
+    // Save to Supabase
+    try {
+      await saveReport(report);
+      logger.info("Report saved to Supabase", { agent: AGENT_ID });
+    } catch (err: any) {
+      logger.warn("Supabase save failed", { agent: AGENT_ID, error: err.message });
+    }
 
     logger.info(`Report generated`, {
       agent: AGENT_ID,
       action: report.recommendedAction,
       risk: report.riskLevel,
       confidence: report.confidence,
-      summary: report.summary,
     });
 
     try {
@@ -165,7 +165,6 @@ async function main() {
   logger.info(`Wallet: ${agentKeypair.publicKey.toBase58()}`, { agent: AGENT_ID });
 
   await airdropIfNeeded(connection, agentKeypair);
-
   await runAnalysisCycle(connection, agentKeypair);
 
   cron.schedule("5,20,35,50 * * * *", async () => {
