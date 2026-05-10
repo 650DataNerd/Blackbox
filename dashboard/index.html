@@ -19,7 +19,7 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
 .strip{height:3px;background:linear-gradient(90deg,var(--gold) 0%,var(--green) 50%,var(--blue) 100%);flex-shrink:0}
 .nav{display:flex;align-items:center;padding:0 28px;height:56px;border-bottom:1px solid var(--line);flex-shrink:0;gap:32px}
 .nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto}
-.logo-sq{width:30px;height:30px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--black);letter-spacing:-.02em}
+.logo-sq{width:30px;height:30px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--black)}
 .logo-wordmark{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--white);letter-spacing:.12em}
 .logo-tag{font-size:10px;color:var(--mid);letter-spacing:.08em;padding-left:10px;border-left:1px solid var(--line2)}
 .nav-stat{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
@@ -78,7 +78,6 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
 .feed-row.hdr{background:var(--surface);position:sticky;top:0;z-index:1;min-height:34px}
 .feed-cell{padding:10px 16px;font-size:12px;color:var(--text);line-height:1.4}
 .feed-cell.hd{font-size:9px;color:var(--mid);letter-spacing:.14em;text-transform:uppercase;padding:8px 16px}
-.feed-cell.mono{font-family:var(--mono)}
 .feed-cell.dim{color:var(--mid)}
 .feed-cell.sum{font-size:11px;line-height:1.55}
 .intel-grid{display:grid;grid-template-columns:1fr 90px 110px}
@@ -105,9 +104,7 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
 </style>
 </head>
 <body>
-
 <div class="strip"></div>
-
 <nav class="nav">
   <div class="nav-logo">
     <div class="logo-sq">BB</div>
@@ -125,7 +122,6 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
     <div class="live-badge"><div class="pulse"></div>Live · Solana Devnet</div>
   </div>
 </nav>
-
 <div class="grid">
   <div class="left-col">
     <div class="agents-wrap">
@@ -155,7 +151,6 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
         </div>
       </div>
     </div>
-
     <div class="econ-wrap">
       <div class="col-label">Economy</div>
       <div class="econ-grid">
@@ -165,7 +160,6 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
         <div class="econ-cell"><div class="econ-val" style="font-size:13px;color:var(--green)">Devnet</div><div class="econ-lbl">Network</div></div>
       </div>
     </div>
-
     <div class="prog-block">
       <div class="prog-row">
         <span class="prog-lbl">Registry program</span>
@@ -174,7 +168,6 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
       <div class="prog-id">4LCZpohjxXFNfT2KtTdPsqXNVbUxW2RwaW91CMv3geaQ</div>
     </div>
   </div>
-
   <div class="right-col">
     <div class="panel">
       <div class="panel-head">
@@ -190,10 +183,9 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
           <div class="feed-cell hd">Confidence</div>
           <div class="feed-cell hd">Tx</div>
         </div>
-        <div id="rep-body"><div class="empty-msg">Awaiting reports — run the analysis agent</div></div>
+        <div id="rep-body"><div class="empty-msg">Loading...</div></div>
       </div>
     </div>
-
     <div class="panel">
       <div class="panel-head">
         <div class="panel-title"><div class="panel-title-dot dot-green"></div>Live Intel Feed</div>
@@ -205,18 +197,24 @@ body{background:var(--black);color:var(--text);font-family:var(--sans);font-size
           <div class="feed-cell hd">Source</div>
           <div class="feed-cell hd">Sentiment</div>
         </div>
-        <div id="intel-body"><div class="empty-msg">Awaiting intel — run the scraper agent</div></div>
+        <div id="intel-body"><div class="empty-msg">Loading...</div></div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="foot">
   <span>Blackbox Autonomous Intelligence Syndicate · Solana Devnet · Rust Program Deployed</span>
   <span id="last-upd">—</span>
 </div>
 
-<script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SUPABASE_URL = 'https://dcoebvyqnydqqbynsmnm.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjb2VidnlxbnlkcXFieW5zbW5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNDg5MTksImV4cCI6MjA5MzkyNDkxOX0.W171qQ1Hq1G0p-R5dMT1zvzQm1XAyjeVbmiLie5fAYM';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{hour12:false})}
 setInterval(clock,1000);clock();
 
@@ -229,58 +227,59 @@ function ago(s){
 }
 
 async function loadStats(){
-  try{
-    const r=await fetch('/api/stats');const d=await r.json();
-    ['batches','reports','trades'].forEach(k=>{
-      document.getElementById('n-'+k).textContent=d[k];
-      document.getElementById('e-'+k).textContent=d[k];
-    });
-  }catch(e){}
+  const [intel,reports,trades]=await Promise.all([
+    supabase.from('intel_batches').select('id',{count:'exact',head:true}),
+    supabase.from('reports').select('id',{count:'exact',head:true}),
+    supabase.from('trades').select('id',{count:'exact',head:true}),
+  ]);
+  const b=intel.count??0, r=reports.count??0, t=trades.count??0;
+  document.getElementById('n-batches').textContent=b;
+  document.getElementById('n-reports').textContent=r;
+  document.getElementById('n-trades').textContent=t;
+  document.getElementById('e-batches').textContent=b;
+  document.getElementById('e-reports').textContent=r;
+  document.getElementById('e-trades').textContent=t;
 }
 
 async function loadReports(){
-  try{
-    const r=await fetch('/api/reports');const data=await r.json();
-    document.getElementById('rep-meta').textContent=data.length+' reports';
-    const el=document.getElementById('rep-body');
-    if(!data.length){el.innerHTML='<div class="empty-msg">No reports — run the analysis agent</div>';return;}
-    el.innerHTML=data.map(r=>`
-      <div class="feed-row">
-        <div class="feed-cell dim mono" style="font-size:11px">${ago(r.generatedAt)}</div>
-        <div class="feed-cell"><span class="chip chip-${r.recommendedAction}">${r.recommendedAction}</span></div>
-        <div class="feed-cell"><span class="chip chip-${r.riskLevel==='medium'?'med':r.riskLevel}">${r.riskLevel}</span></div>
-        <div class="feed-cell sum">${r.summary||'—'}</div>
-        <div class="feed-cell">
-          <div class="cbar">
-            <div class="cbar-track"><div class="cbar-fill" style="width:${Math.round(r.confidence*100)}%"></div></div>
-            <div class="cbar-pct">${Math.round(r.confidence*100)}%</div>
-          </div>
+  const {data}=await supabase.from('reports').select('*').order('generated_at',{ascending:false}).limit(20);
+  const el=document.getElementById('rep-body');
+  document.getElementById('rep-meta').textContent=(data?.length||0)+' reports';
+  if(!data?.length){el.innerHTML='<div class="empty-msg">No reports yet</div>';return;}
+  el.innerHTML=data.map(r=>`
+    <div class="feed-row">
+      <div class="feed-cell dim" style="font-size:11px;font-family:var(--mono)">${ago(r.generated_at)}</div>
+      <div class="feed-cell"><span class="chip chip-${r.recommended_action}">${r.recommended_action}</span></div>
+      <div class="feed-cell"><span class="chip chip-${r.risk_level==='medium'?'med':r.risk_level}">${r.risk_level}</span></div>
+      <div class="feed-cell sum">${r.summary||'—'}</div>
+      <div class="feed-cell">
+        <div class="cbar">
+          <div class="cbar-track"><div class="cbar-fill" style="width:${Math.round(r.confidence*100)}%"></div></div>
+          <div class="cbar-pct">${Math.round(r.confidence*100)}%</div>
         </div>
-        <div class="feed-cell">${r.paidTxSignature?`<a class="tx-link" href="https://explorer.solana.com/tx/${r.paidTxSignature}?cluster=devnet" target="_blank">view ↗</a>`:'<span style="color:var(--mid)">—</span>'}</div>
       </div>
-    `).join('');
-  }catch(e){}
+      <div class="feed-cell">${r.paid_tx_signature?`<a class="tx-link" href="https://explorer.solana.com/tx/${r.paid_tx_signature}?cluster=devnet" target="_blank">view ↗</a>`:'<span style="color:var(--mid)">—</span>'}</div>
+    </div>
+  `).join('');
 }
 
 async function loadIntel(){
-  try{
-    const r=await fetch('/api/intel');const items=await r.json();
-    document.getElementById('intel-meta').textContent=items.length+' items';
-    const el=document.getElementById('intel-body');
-    if(!items.length){el.innerHTML='<div class="empty-msg">No intel — run the scraper agent</div>';return;}
-    el.innerHTML=items.map(i=>`
-      <div class="feed-row intel-grid">
-        <div class="feed-cell">${i.title}</div>
-        <div class="feed-cell dim mono" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${i.source}</div>
-        <div class="feed-cell">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="sent sent-${i.sentiment==='positive'?'pos':i.sentiment==='negative'?'neg':'neu'}"></div>
-            <span style="font-size:11px;color:var(--mid)">${ago(i.fetchedAt)}</span>
-          </div>
+  const {data}=await supabase.from('intel_batches').select('*').order('fetched_at',{ascending:false}).limit(20);
+  const el=document.getElementById('intel-body');
+  document.getElementById('intel-meta').textContent=(data?.length||0)+' items';
+  if(!data?.length){el.innerHTML='<div class="empty-msg">No intel yet</div>';return;}
+  el.innerHTML=data.map(i=>`
+    <div class="feed-row intel-grid">
+      <div class="feed-cell">${i.title}</div>
+      <div class="feed-cell dim" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)">${i.source}</div>
+      <div class="feed-cell">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="sent sent-${i.sentiment==='positive'?'pos':i.sentiment==='negative'?'neg':'neu'}"></div>
+          <span style="font-size:11px;color:var(--mid)">${ago(i.fetched_at)}</span>
         </div>
       </div>
-    `).join('');
-  }catch(e){}
+    </div>
+  `).join('');
 }
 
 async function refresh(){
