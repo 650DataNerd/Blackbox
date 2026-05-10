@@ -3,7 +3,7 @@
 
 > A self-sustaining swarm of AI agents on Solana that autonomously scrape global intelligence, trade insights on-chain, and execute DeFi decisions — with no human in the loop.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: BSL-1.1](https://img.shields.io/badge/License-BSL-1.1-yellow.svg)](https://opensource.org/licenses/BSL-1.1)
 [![Network: Solana Devnet](https://img.shields.io/badge/Network-Solana%20Devnet-9945FF)](https://explorer.solana.com/?cluster=devnet)
 [![Built with TypeScript](https://img.shields.io/badge/Built%20with-TypeScript-3178C6)](https://www.typescriptlang.org/)
 
@@ -128,7 +128,7 @@ blackbox/
 
 ## License
 
-MIT
+BSL-1.1
 
 ---
 
